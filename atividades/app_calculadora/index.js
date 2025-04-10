@@ -1,6 +1,6 @@
 // para navegar ate a pasta da aplicacao :cd app_calculadora
 // para criar o app npm: npm init
-// intalar o express: npm install express@4.18.2
+// intalar o express: npm install express@4.18.2 // mustache-express@1.3.2
 
 const calc = require('./calculadora');
 const express = require('express');
