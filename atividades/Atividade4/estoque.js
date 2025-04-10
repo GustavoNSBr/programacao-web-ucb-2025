@@ -1,12 +1,23 @@
-const itens = [];
+let itens = [];
 
 function adicionar(item){
+    let item_valido = true;
 
-    if(validar_item_a_cadastrar(item)){
-        itens.push(item);
-        return true;
+    if(
+        !is_numerico(item.id) ||
+        is_id_cadastrado(item.id) ||
+        item.id <= 0 ||
+        !is_numerico(item.qtd) ||
+        item.qtd < 0 ||
+        item.nome.length <= 0
+    ){
+        item_valido = false;
     }
-    return false;
+
+    if(item_valido){
+        itens.push(item);
+    }
+    return item_valido;
 }
 
 function listar(){
@@ -14,71 +25,46 @@ function listar(){
 }
 
 function editar(id, qtd){
-    return editar_item(id, qtd);
+    let item_valido = true;
+
+    if(
+        !is_numerico(id) ||
+        !is_id_cadastrado(id) ||
+        !is_numerico(qtd)
+    ){
+        item_valido = false;
+    }
+
+    if(item_valido){
+        itens.forEach(item_cadastrado => {
+            if(item_cadastrado.id == id){
+                item_cadastrado.qtd = qtd;
+            }
+        });
+    }
+    
+    return item_valido;
 }
 
 module.exports = {
     adicionar,
     listar,
     editar
+};
+
+function is_id_cadastrado(id){
+    let id_cadastrado = false;
+    itens.forEach(item_cadastrado => {
+        if(item_cadastrado.id == id){
+            id_cadastrado = true;
+        }
+    });
+    return id_cadastrado;
 }
 
 function is_numerico(n){
-    if (isNaN(n) || n == null){
+    if(isNaN(n) || n == null){
         return false;
-    }
-    return true;
-}
-
-function is_id_cadastrado(id){
-    for (let indice in itens){
-        let item_cadastrado = itens[indice];
-        if (item_cadastrado.id === id){
-            item_valido = true;
-        }
-    }
-    return false;
-}
-
-function validar_item_a_cadastrar (item){
-    let item_valido = true;
-    // se o id for NaN, nulo ou igual a 0
-    // Nao deve ser cadastrado
-
-    if(is_numerico(item.id) || item.id <= 0){
-        item_valido = false;
-    }
-
-    // se o id ja existir, nao deve ser cadastrado
-    if(is_id_cadastrado(item.id)){
-        item_valido = false;
-    }
-
-
-    if(is_numerico(item.qtd) || item.qtd <= 0){
-        item_valido = false;
-    }
-
-    if(item.nome.length < 1){
-        item_valido = false;
-    }
-}
-
-function editar_item(id, qtd){
-    if(!is_numerico || id === 0){
-        return false;
-    }
-    if(!is_id_cadastrado(id)){
-        return false;
-    }
-    if(!is_numerico(qtd) || qtd < 0){
-        return false;
-    }
-
-    for(let item_cadastrado in itens){
-        if(item_cadastrado.id === id){
-            item_cadastrado.qtd = qtd;
-        }
     }
     return true;
 }
