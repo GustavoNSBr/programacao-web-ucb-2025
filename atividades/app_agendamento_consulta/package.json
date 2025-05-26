@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
+    "express": "^4.21.2",
     "mustache-express": "^1.3.2"
-  }
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "type": "commonjs"
 }

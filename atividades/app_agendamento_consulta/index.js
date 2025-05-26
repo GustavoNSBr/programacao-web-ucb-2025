@@ -8,7 +8,7 @@ app.set('views', __dirname + '/views');
 app.use(express.urlencoded({extended: true}));
 
 const agendamentoRouter = require('./routers/agendamentoRouter');
-app.use('/', agendamentoRouter);
+app.use('/agendamento', agendamentoRouter);
 
 const PORT = 8080;
 app.listen(PORT, ()=>{
